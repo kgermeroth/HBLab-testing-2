@@ -54,6 +54,11 @@ class PartyTestsDatabase(unittest.TestCase):
 
     def test_games(self):
         # FIXME: test that the games page displays the game from example_data()
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['RSVP'] = True
+                
         result = self.client.get("/games")
         self.assertIn(b"Monopoly", result.data)
 
